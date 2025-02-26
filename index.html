@@ -3,39 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng Nhập - Hệ Thống Quản Lý</title>
+    <title>Hệ Thống Quản Lý Ghép Xe</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            /* Ảnh nền mặc định */
             background: url('https://shop.vinfastauto.com/on/demandware.static/-/Sites-app_vinfast_vn-Library/default/dw6dac8f1c/images/vfast/Hinh-anh-xe-SUV-VinFast-President-gia-xe-thong-so-bang-mau-dong-co-v8.jpg') no-repeat center center/cover;
-            backdrop-filter: blur(0px);
             color: white;
         }
-
         .container {
             display: flex;
             width: 800px;
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.4);
         }
-
         .left-panel, .right-panel {
             flex: 1;
             padding: 50px;
         }
-
         .left-panel {
             background: rgba(255, 255, 255, 0.2);
             text-align: center;
@@ -44,18 +39,15 @@
             justify-content: center;
             align-items: center;
         }
-
         .right-panel h2 {
             font-size: 26px;
             margin-bottom: 25px;
             text-align: center;
         }
-
         .input-group {
             position: relative;
             margin-bottom: 20px;
         }
-
         .input-group input {
             width: 100%;
             padding: 14px;
@@ -65,13 +57,7 @@
             background: rgba(255, 255, 255, 0.3);
             color: white;
             outline: none;
-            transition: 0.3s;
         }
-
-        .input-group input:focus {
-            background: rgba(255, 255, 255, 0.4);
-        }
-
         .btn {
             width: 100%;
             padding: 14px;
@@ -82,25 +68,28 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
         }
-
-        .btn:hover {
-            background: linear-gradient(90deg, #ff6b81, #ff5252);
-            transform: scale(1.03);
-        }
-
-        #error-message {
-            color: #ff4c4c;
-            margin-top: 12px;
-            font-size: 14px;
-            text-align: center;
+        .menu {
             display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .menu a {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="login-container">
         <div class="left-panel">
             <h2>Showroom VF Minh Đạo Thuận An</h2>
             <p>Đăng nhập để quản lý đơn hàng của bạn dễ dàng và hiệu quả.</p>
@@ -114,8 +103,16 @@
                 <input type="password" id="password" placeholder="Nhập mật khẩu">
             </div>
             <button class="btn" onclick="login()">Đăng Nhập</button>
-            <p id="error-message">Sai tên đăng nhập hoặc mật khẩu</p>
+            <p id="error-message" style="color:#ff4c4c; display: none;">Sai tên đăng nhập hoặc mật khẩu</p>
         </div>
+    </div>
+
+    <div class="menu" id="menu" style="display: none;">
+        <h1>Hệ Thống Quản Lý Ghép Xe</h1>
+        <a href="create.html">Tạo Nhu Cầu Ghép Xe</a>
+        <a href="matched_orders.html">Danh Sách Đơn Hàng Đã Ghép Xe</a>
+        <a href="pending_orders.html">Danh Sách Đơn Hàng Chờ Ghép</a>
+        <a href="inventory.html">Tồn Kho Xe</a>
     </div>
 
     <script>
@@ -123,7 +120,10 @@
             var username = document.getElementById("username").value.trim();
             var password = document.getElementById("password").value.trim();
             var errorMessage = document.getElementById("error-message");
+            var loginContainer = document.getElementById("login-container");
+            var menu = document.getElementById("menu");
 
+            // Thông tin người dùng đăng nhập
             var users = {
                 "admin": "admin123",
                 "TVBH": "tvbh123"
@@ -138,13 +138,15 @@
                     position: "right",
                     backgroundColor: "green",
                 }).showToast();
+
                 setTimeout(() => {
-                    if (username === "admin") {
-                        window.location.href = "dashboard.html";
-                    } else if (username === "TVBH") {
-                        window.location.href = "https://showroomthuanan.github.io/luachon/";
-                    }
-                }, 3000);
+                    loginContainer.style.display = "none";
+                    menu.style.display = "block";
+
+                    // Đổi background thành ảnh mới sau khi đăng nhập
+                    document.body.style.background = "url('https://ircdn.vingroup.net/storage/Uploads/0_Tintuchoatdong/2021/Nov/VinFast%20Booth_Tuong%20lai%20cua%20di%20chuyen.jpg') no-repeat center center / cover";
+                    document.body.style.backgroundSize = "cover";
+                }, 2000);
             } else {
                 errorMessage.style.display = "block";
             }
