@@ -4,73 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập - Quản Lý Đơn Hàng</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #000428, #004e92);
+            background: linear-gradient(to right, #1c1c1c, #2d2d2d, #3c3c3c);
             color: white;
             flex-direction: column;
         }
+
         .login-container {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
-            padding: 50px;
-            border-radius: 12px;
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.35);
             text-align: center;
-            width: 400px;
+            width: 350px;
         }
+
         .login-container h2 {
-            margin-bottom: 25px;
-            font-size: 28px;
+            margin-bottom: 20px;
+            font-size: 24px;
             font-weight: 600;
         }
+
         .title {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             text-transform: uppercase;
             text-align: center;
         }
-        input {
+
+        .input-group {
+            position: relative;
             width: 100%;
-            padding: 14px;
-            margin: 12px 0;
+            margin-bottom: 12px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 35px 10px 10px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.15);
             color: white;
             outline: none;
+            transition: 0.3s ease-in-out;
         }
+
+        .input-group input:focus {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         input::placeholder {
             color: rgba(255, 255, 255, 0.7);
         }
+
         button {
             width: 100%;
-            padding: 14px;
-            background: #f39c12;
+            padding: 10px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e53);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 18px;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
+
         button:hover {
-            background: #e67e22;
+            background: linear-gradient(90deg, #ff5252, #ff733f);
+            transform: scale(1.02);
         }
+
         #error-message {
             color: #ff4c4c;
-            margin-top: 15px;
+            margin-top: 8px;
             font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -78,22 +108,29 @@
     <div class="title">QUẢN LÝ ĐƠN HÀNG SHOWROOM THUẬN AN</div>
     <div class="login-container">
         <h2>Đăng Nhập</h2>
-        <input type="text" id="username" placeholder="Tên đăng nhập">
-        <input type="password" id="password" placeholder="Mật khẩu">
-        <button onclick="login()">Đăng nhập</button>
-        <p id="error-message"></p>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Tên đăng nhập">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Mật khẩu">
+            <i class="fas fa-lock"></i>
+        </div>
+        <button onclick="login()">Đăng Nhập</button>
+        <p id="error-message">Sai tên đăng nhập hoặc mật khẩu</p>
     </div>
+
     <script>
         function login() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+            var username = document.getElementById("username").value.trim();
+            var password = document.getElementById("password").value.trim();
             var errorMessage = document.getElementById("error-message");
-            
+
             var users = {
                 "admin": { password: "admin123", role: "admin" },
                 "tvbh": { password: "tvbh123", role: "tvbh" }
             };
-            
+
             if (users[username] && users[username].password === password) {
                 alert("Đăng nhập thành công!");
                 if (users[username].role === "admin") {
@@ -102,7 +139,7 @@
                     window.location.href = "https://showroomthuanan.github.io/luachon/";
                 }
             } else {
-                errorMessage.innerText = "Sai tên đăng nhập hoặc mật khẩu";
+                errorMessage.style.opacity = 1;
             }
         }
     </script>
