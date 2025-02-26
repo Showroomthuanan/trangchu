@@ -115,7 +115,13 @@
         <a href="inventory.html">Tồn Kho Xe</a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.js"></script>
+
     <script>
+        function hashPassword(password) {
+            return CryptoJS.SHA256(password).toString();
+        }
+
         function login() {
             var username = document.getElementById("username").value.trim();
             var password = document.getElementById("password").value.trim();
@@ -123,13 +129,15 @@
             var loginContainer = document.getElementById("login-container");
             var menu = document.getElementById("menu");
 
-            // Thông tin người dùng đăng nhập
+            // Danh sách tài khoản với mật khẩu đã được mã hóa SHA-256
             var users = {
-        "admin": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
-        "TVBH": "36856228c9b90fa8761177adf05c1c0d8bea4e81cb6a78e769ec552ba5984ce3"
+                "admin": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // Hash của "admin123"
+                "TVBH": "36856228c9b90fa8761177adf05c1c0d8bea4e81cb6a78e769ec552ba5984ce3"  // Hash của "tvbh123"
             };
 
-            if (users[username] && users[username] === password) {
+            var hashedPassword = hashPassword(password); // Băm mật khẩu trước khi so sánh
+
+            if (users[username] && users[username] === hashedPassword) {
                 Toastify({
                     text: "Đăng nhập thành công!",
                     duration: 3000,
@@ -143,7 +151,7 @@
                     loginContainer.style.display = "none";
                     menu.style.display = "block";
 
-                    // Đổi background thành ảnh mới sau khi đăng nhập
+                    // Đổi background sau khi đăng nhập
                     document.body.style.background = "url('https://ircdn.vingroup.net/storage/Uploads/0_Tintuchoatdong/2021/Nov/VinFast%20Booth_Tuong%20lai%20cua%20di%20chuyen.jpg') no-repeat center center / cover";
                     document.body.style.backgroundSize = "cover";
                 }, 2000);
