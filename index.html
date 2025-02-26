@@ -1,54 +1,110 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Lock, User } from "lucide-react";
-import { motion } from "framer-motion";
-
-export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    console.log("Đăng nhập với:", username, password);
-  };
-
-  return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Card className="w-96 shadow-lg rounded-2xl bg-white">
-          <CardContent className="p-6 space-y-4">
-            <h2 className="text-2xl font-semibold text-center">Đăng nhập</h2>
-            <div className="space-y-2">
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <Input
-                  type="text"
-                  placeholder="Tên đăng nhập"
-                  className="pl-10"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                <Input
-                  type="password"
-                  placeholder="Mật khẩu"
-                  className="pl-10"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              <Button className="w-full mt-4" onClick={handleLogin}>Đăng nhập</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập - Quản Lý Đơn Hàng</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #000428, #004e92);
+            color: white;
+            flex-direction: column;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 400px;
+        }
+        .login-container h2 {
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #f39c12;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #e67e22;
+        }
+        #error-message {
+            color: #ff4c4c;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">QUẢN LÝ ĐƠN HÀNG SHOWROOM THUẬN AN</div>
+    <div class="login-container">
+        <h2>Đăng Nhập</h2>
+        <input type="text" id="username" placeholder="Tên đăng nhập">
+        <input type="password" id="password" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+        <p id="error-message"></p>
     </div>
-  );
-}
+    <script>
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorMessage = document.getElementById("error-message");
+            
+            var users = {
+                "admin": { password: "admin123", role: "admin" },
+                "tvbh": { password: "tvbh123", role: "tvbh" }
+            };
+            
+            if (users[username] && users[username].password === password) {
+                alert("Đăng nhập thành công!");
+                if (users[username].role === "admin") {
+                    window.location.href = "admin_dashboard.html";
+                } else if (users[username].role === "tvbh") {
+                    window.location.href = "https://showroomthuanan.github.io/luachon/";
+                }
+            } else {
+                errorMessage.innerText = "Sai tên đăng nhập hoặc mật khẩu";
+            }
+        }
+    </script>
+</body>
+</html>
