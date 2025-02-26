@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập - Hệ Thống Quản Lý</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -41,16 +43,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-        }
-
-        .left-panel h2 {
-            font-size: 30px;
-            margin-bottom: 15px;
-        }
-
-        .left-panel p {
-            font-size: 16px;
-            margin-bottom: 20px;
         }
 
         .right-panel h2 {
@@ -138,12 +130,21 @@
             };
 
             if (users[username] && users[username] === password) {
-                alert("Đăng nhập thành công!");
-                if (username === "admin") {
-                    window.location.href = "dashboard.html";
-                } else if (username === "TVBH") {
-                    window.location.href = "https://showroomthuanan.github.io/luachon/";
-                }
+                Toastify({
+                    text: "Đăng nhập thành công!",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "green",
+                }).showToast();
+                setTimeout(() => {
+                    if (username === "admin") {
+                        window.location.href = "dashboard.html";
+                    } else if (username === "TVBH") {
+                        window.location.href = "https://showroomthuanan.github.io/luachon/";
+                    }
+                }, 3000);
             } else {
                 errorMessage.style.display = "block";
             }
